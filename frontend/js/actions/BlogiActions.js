@@ -16,6 +16,18 @@ var BlogiActions = {
     BlogiDispatcher.handleAction({
       actionType: BlogiConstants.LOAD_CLICKED
     });
+  },
+
+  blogPostSubmitted: function(blogPost) {
+   BlogiApi.submitBlogPost(blogPost, this.blogPostSaveCb);
+    BlogiDispatcher.handleAction({
+      actionType: BlogiConstants.BLOG_POST_SUBMITTED
+    });
+  },
+
+  blogPostSaveCb: function(data) {
+    // TODO: handle
+    console.log(data);
   }
 
 };

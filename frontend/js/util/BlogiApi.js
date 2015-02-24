@@ -39,7 +39,15 @@ var BlogiApi = {
         }
       ]);
     }, 200);
+  },
+
+  submitBlogPost: function(blogPost, cb) {
+    setTimeout(function() {
+      // TODO: return some data how submit went
+      cb({asd:"submitblogpostcallback"});
+    }, 200);
   }
+
 };
 
 module.exports = BlogiApi;
