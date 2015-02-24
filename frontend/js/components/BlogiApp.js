@@ -1,45 +1,26 @@
 var React = require('react');
+var RouteHandler = require('react-router').RouteHandler;
 var BlogiStore = require('../stores/BlogiStore');
 var BlogiActions = require('../actions/BlogiActions');
-var BlogPostList = require('./BlogPostList')
+var BlogPostList = require('./BlogPostList');
+var Navigation = require('./Navigation');
 
-function getAppState() {
-  return {
-    posts: BlogiStore.getPosts()
-  };
-}
+
 
 var BlogiApp = React.createClass({
 
-  getInitialState: function() {
-    return getAppState();
-  },
-
-  componentDidMount: function() {
-    BlogiStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    BlogiStore.removeChangeListener(this._onChange);
-  },
-
-  loadClicked: function() {
-    BlogiActions.loadClicked();
-  },
-
   render: function() {
+    var page;
+
     return (
       <div>
-        <a href="#" onClick={this.loadClicked}>lload</a>
-        <BlogPostList blogPosts={this.state.posts}></BlogPostList>
+        <header>
+          <Navigation />
+        </header>
+        <RouteHandler />
       </div>
     );
   },
-
-  _onChange: function() {
-    console.log("_onChange called");
-    this.setState(getAppState());
-  }
 
 });
 

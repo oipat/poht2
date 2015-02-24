@@ -10,6 +10,10 @@ function loadPosts(data) {
   _posts = data;
 }
 
+function removeAllPosts() {
+  _posts = [];
+}
+
 var BlogiStore = assign({}, EventEmitter.prototype, {
 
   getPosts: function() {
@@ -38,8 +42,8 @@ AppDispatcher.register(function(payload) {
       loadPosts(action.data);
       break;
 
-    case BlogiConstants.TEST:
-      loadPosts({posts: _posts + "a"});
+    case BlogiConstants.LOAD_CLICKED:
+      removeAllPosts();
       break;
 
     default:
