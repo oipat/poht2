@@ -5,19 +5,32 @@ var BlogiConstants = require('../constants/BlogiConstants');
 
 
 var _posts = [];
+var _isSubmitPending = false;
 
 function loadPosts(data) {
   _posts = data;
+}
+
+function addPost(newPost) {
+  _posts.push(newPost);
 }
 
 function removeAllPosts() {
   _posts = [];
 }
 
+function setSubmitPending(value) {
+  _isSubmitPending = value;
+}
+
 var BlogiStore = assign({}, EventEmitter.prototype, {
 
   getPosts: function() {
     return _posts;
+  },
+
+  isSubmitPending: function() {
+    return _isSubmitPending;
   },
 
   emitChange: function() {
@@ -44,6 +57,15 @@ AppDispatcher.register(function(payload) {
 
     case BlogiConstants.LOAD_CLICKED:
       removeAllPosts();
+      break;
+
+    case BlogiConstants.BLOG_POST_SUBMITTED:
+      setSubmitPending(true);
+      break;
+
+    case BlogiConstants.BLOG_POST_SAVED:
+      setSubmitPending(false);
+      addPost(action.data);
       break;
 
     default:

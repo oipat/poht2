@@ -1,7 +1,4 @@
-'use strict';
-
 var request = require('then-request');
-var BlogiActions = require('../actions/BlogiActions');
 
 var BlogiApi = {
 
@@ -43,8 +40,7 @@ var BlogiApi = {
 
   submitBlogPost: function(blogPost, cb) {
     setTimeout(function() {
-      // TODO: return some data how submit went
-      cb({asd:"submitblogpostcallback"});
+      cb(blogPost);
     }, 200);
   }
 

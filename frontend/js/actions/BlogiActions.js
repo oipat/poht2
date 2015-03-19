@@ -19,15 +19,18 @@ var BlogiActions = {
   },
 
   blogPostSubmitted: function(blogPost) {
-   BlogiApi.submitBlogPost(blogPost, this.blogPostSaveCb);
+    BlogiApi.submitBlogPost(blogPost, this.blogPostSaveCb);
     BlogiDispatcher.handleAction({
       actionType: BlogiConstants.BLOG_POST_SUBMITTED
     });
   },
 
   blogPostSaveCb: function(data) {
-    // TODO: handle
-    console.log(data);
+   // TODO: do something with data
+   BlogiDispatcher.handleAction({
+     actionType: BlogiConstants.BLOG_POST_SAVED,
+     data: data
+   });
   }
 
 };

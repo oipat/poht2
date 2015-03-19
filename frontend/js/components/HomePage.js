@@ -3,10 +3,10 @@ var BlogiStore = require('../stores/BlogiStore');
 var BlogiActions = require('../actions/BlogiActions');
 var BlogPostList = require('./BlogPostList');
 
-
 function getAppState() {
   return {
-    posts: BlogiStore.getPosts()
+    posts: BlogiStore.getPosts(),
+    // submitPending: BlogiStore.isSubmitPending()
   };
 }
 
