@@ -14,9 +14,11 @@ var BlogPostList = React.createClass({
   render: function() {
     return (
       <dl>
-        {this.props.blogPosts.map(function(blogPost, i) {
+        {
+          this.props.blogPosts.map(function(blogPost, i) {
             return <BlogPost key={i}>{blogPost}</BlogPost>;
-        })}
+          })
+        }
       </dl>
     );
   }

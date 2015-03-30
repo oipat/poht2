@@ -1,0 +1,12 @@
+{
+  "name": "blogi-backend",
+  "description": "",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "~4.12.3",
+    "nedb": "~1.1.1",
+    "body-parser": "~1.12.2",
+    "cors": "~2.5.3",
+    "express-validator": "~2.9.0"
+  }
+}
