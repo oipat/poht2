@@ -26,7 +26,6 @@ var BlogiActions = {
   },
 
   blogPostSaveCb: function(data) {
-   // TODO: do something with data
    BlogiDispatcher.handleAction({
      actionType: BlogiConstants.BLOG_POST_SAVED,
      data: data

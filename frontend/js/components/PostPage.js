@@ -5,8 +5,7 @@ var BlogiStore = require('../stores/BlogiStore');
 
 function getAppState() {
   return {
-    // posts: BlogiStore.getPosts(),
-    submitPending: BlogiStore.isSubmitPending()
+    submitState: BlogiStore.getSubmitState()
   };
 }
 
@@ -14,12 +13,10 @@ var PostPage = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var title = this.refs.title.getDOMNode().value.trim();
-    var body = this.refs.body.getDOMNode().value.trim();
+    console.log(this.state);
 
-    // if(!title || !body) {
-    //   return;
-    // }
+    var title = this.state.titleValue;
+    var body = this.state.bodyValue;
 
     BlogiActions.blogPostSubmitted({title: title, body: body});
     // TODO: rather than clearing data, display some fancy
@@ -27,7 +24,11 @@ var PostPage = React.createClass({
   },
 
   getInitialState: function() {
-    return getAppState();
+    return {
+      titleValue: "",
+      bodyValue: "",
+      submitState: "no"
+    };
   },
 
   componentDidMount: function() {
@@ -40,28 +41,22 @@ var PostPage = React.createClass({
 
   render: function() {
 
-    var pending;
-    if(this.state.submitPending === true) {
-      pending = "joo";
-    }
-    else {
-      pending = "njää";
-    }
+    var pending = this.state.submitState;
 
     return (
-      <div>
+      <div className="postform">
         <form method="post" action="" onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-group">
             <label htmlFor="title">title:</label>
-            <input type="text" ref="title" />
+            <input type="text" className="form-control" id="title"
+              onChange={this._titleChanged} value={this.state.titleValue}/>
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="body">post:</label>
-            <textarea ref="body"></textarea>
+            <textarea id="body" className="form-control"
+              value={this.state.bodyValue} onChange={this._bodyChanged}></textarea>
           </div>
-          <div>
-            <button>Submit</button>
-          </div>
+          <button type="submit" className="btn btn-default">Submit</button>
           <div>
             {pending}
           </div>
@@ -71,7 +66,20 @@ var PostPage = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(getAppState());
+    var newState = getAppState();
+    if(newState.submitState === "ok") {
+      this.setState({titleValue: "", bodyValue: ""});
+    }
+    console.log(newState);
+    this.setState(newState);
+  },
+
+  _titleChanged: function(e) {
+    this.setState({titleValue: e.target.value});
+  },
+
+  _bodyChanged: function(e) {
+    this.setState({bodyValue: e.target.value});
   }
 
 });

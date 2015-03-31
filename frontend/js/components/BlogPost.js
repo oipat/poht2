@@ -11,9 +11,9 @@ var BlogPost = React.createClass({
   render: function() {
     return (
       <div>
-        <dt>title: {this.props.children.title}</dt><br/>
-        <dt>author: {this.props.children.author}</dt><br/>
-        <dt>{this.props.children.body}</dt><br/>
+        <h3>{this.props.children.title}</h3>
+        <p>{this.props.children.author}</p>
+        <p>{this.props.children.body}</p>
       </div>
     );
   }

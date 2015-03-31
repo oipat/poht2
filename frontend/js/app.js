@@ -5,6 +5,9 @@ var BlogiApi = require('./util/BlogiApi');
 var BlogiActions = require('./actions/BlogiActions');
 var HomePage = require('./components/HomePage');
 var PostPage = require('./components/PostPage');
+jQuery = require('jquery');
+var Bootstrap = require('bootstrap');
+console.log(Bootstrap);
 
 (window !== window.top ? window.top : window).React = React;
 

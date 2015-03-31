@@ -47,7 +47,7 @@ var BlogiApi = {
         try {
           cb(JSON.parse(res.getBody()));
         } catch(err) {
-          console.log(err);
+          cb(JSON.parse(err.body));
         }
       });
 

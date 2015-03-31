@@ -9,11 +9,16 @@ var BlogiApp = React.createClass({
     var page;
 
     return (
-      <div>
+      <div className="container-fluid">
         <header>
           <Navigation />
         </header>
-        <RouteHandler />
+        <section id="content" className="row">
+          <div className="col-xs-9">
+            <RouteHandler />
+          </div>
+          <div className="col-xs-3"></div>
+        </section>
       </div>
     );
   },
