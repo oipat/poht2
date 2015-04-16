@@ -1,5 +1,6 @@
 var request = require('then-request');
 
+
 var BlogiApi = {
 
   getBlogPosts: function(numPosts, cb) {
@@ -13,26 +14,26 @@ var BlogiApi = {
         }
       });
 
-    // for testing purposes
-    // setTimeout(function() {
-    //   cb([
-    //     {
-    //       title: "BlogPostTitle1",
-    //       body: "BlogPostBody1",
-    //       author: "Author1"
-    //     },
-    //     {
-    //       title: "BlogPostTitle2",
-    //       author: "Author2",
-    //       body: "BlogPostBody2"
-    //     }, 
-    //     {
-    //       title: "BlogPostTitle3",
-    //       author: "Author1",
-    //       body: "BlogPostBody3"
-    //     }
-    //   ]);
-    // }, 200);
+    //  for testing purposes
+    /*setTimeout(function() {
+      cb([
+        {
+          title: "BlogPostTitle1",
+          body: "BlogPostBody1",
+          author: "Author1"
+        },
+        {
+          title: "BlogPostTitle2",
+          author: "Author2",
+          body: "BlogPostBody2"
+        }, 
+        {
+          title: "BlogPostTitle3",
+          author: "Author1",
+          body: "BlogPostBody3"
+        }
+      ]);
+    }, 1000);*/
   },
 
   submitBlogPost: function(blogPost, cb) {

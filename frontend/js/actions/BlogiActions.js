@@ -1,37 +1,29 @@
-var BlogiDispatcher = require('../dispatcher/BlogiDispatcher');
-var BlogiConstants = require('../constants/BlogiConstants');
+var alt = require('../alt');
+
 var BlogiApi = require('../util/BlogiApi');
 
-var BlogiActions = {
 
-  loadPosts: function(data) {
-    BlogiDispatcher.handleAction({
-      actionType: BlogiConstants.LOAD_POSTS,
-      data: data
-    });
-  },
-
-  loadClicked: function() {
-    BlogiApi.getBlogPosts(5, this.loadPosts);
-    BlogiDispatcher.handleAction({
-      actionType: BlogiConstants.LOAD_CLICKED
-    });
-  },
-
-  blogPostSubmitted: function(blogPost) {
-    BlogiApi.submitBlogPost(blogPost, this.blogPostSaveCb);
-    BlogiDispatcher.handleAction({
-      actionType: BlogiConstants.BLOG_POST_SUBMITTED
-    });
-  },
-
-  blogPostSaveCb: function(data) {
-   BlogiDispatcher.handleAction({
-     actionType: BlogiConstants.BLOG_POST_SAVED,
-     data: data
-   });
+class BlogiActions {
+  constructor() {
+    this.generateActions(
+      'loadPostsComplete'
+    );
   }
 
-};
+  loadClicked() {
+    console.log("actions.loadclicked");
+    this.dispatch();
+    this.actions.loadPosts();
+  }
 
-module.exports = BlogiActions;
+  loadPosts() {
+    console.log("actions.loadPosts")
+    this.dispatch({});
+    BlogiApi.getBlogPosts(5,
+      (posts) => { this.actions.loadPostsComplete(posts) }
+    );
+  }
+
+}
+
+module.exports = alt.createActions(BlogiActions);
