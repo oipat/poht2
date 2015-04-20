@@ -22,8 +22,8 @@ app.get('/blogi/posts', function(req, res) {
 });
 
 app.post('/blogi/posts', function(req, res) {
-  req.checkBody('title').notEmpty().isAlpha().isLength(3, 50);
-  req.checkBody('body').notEmpty().isAlpha();
+  req.checkBody('title').notEmpty().isLength(3, 50);
+  req.checkBody('body').notEmpty();
 
   var errors = req.validationErrors();
   if(errors) {

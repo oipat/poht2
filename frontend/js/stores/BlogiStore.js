@@ -1,25 +1,18 @@
 var alt = require('../alt');
 
-var blogiActions = require('../actions/BlogiActions')
+var BlogiActions = require('../actions/BlogiActions')
 
 
 class BlogiStore {
   constructor() {
-    this.bindActions(blogiActions);
+    this.bindActions(BlogiActions);
     this.posts = [];
+    this.submitState = "no";
+    this.on('init', () => {
+      console.debug('BlogiStore.init');
+      BlogiActions.loadPosts();
+    });
   }
-
-  /*addPost(newPost) {
-    posts.push(newPost);
-  }
-
-  removeAllPosts() {
-    posts = [];
-  }
-
-  setSubmitState(value) {
-    submitState = value;
-  }*/
 
   loadClicked() {
     console.log("store.loadclicked");
@@ -31,6 +24,19 @@ class BlogiStore {
     this.posts = newPosts;
   }
 
-};
+  submitBlogPost(newBlogPost) {
+    console.log('store.submitBlogPost');
+    this.submitState = "yes";
+  }
+
+  submitBlogPostComplete(savedBlogPost) {
+    console.log('store.submitBlogPostComplete');
+    console.log(savedBlogPost);
+    this.posts.push(savedBlogPost);
+    console.log(this.posts);
+    this.submitState = "ok";
+  }
+
+}
 
 module.exports = alt.createStore(BlogiStore);

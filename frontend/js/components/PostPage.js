@@ -1,15 +1,28 @@
 var React = require('react');
+var ListenerMixin = require('alt/mixins/ListenerMixin');
+
 var BlogiActions = require('../actions/BlogiActions');
 var BlogiStore = require('../stores/BlogiStore');
 
 
 function getAppState() {
-  return {
-    submitState: BlogiStore.getSubmitState()
-  };
+  return BlogiStore.getState();
 }
 
 var PostPage = React.createClass({
+  mixins: [ListenerMixin],
+
+  getInitialState() {
+    return BlogiStore.getState();
+  },
+
+  componentDidMount() {
+    this.listenTo(BlogiStore, this.onChange);
+  },
+
+  onChange() {
+    this.setState(this.getInitialState())
+  },
 
   handleSubmit: function(e) {
     e.preventDefault();
@@ -18,25 +31,9 @@ var PostPage = React.createClass({
     var title = this.state.titleValue;
     var body = this.state.bodyValue;
 
-    BlogiActions.blogPostSubmitted({title: title, body: body});
+    BlogiActions.submitBlogPost({title: title, body: body});
     // TODO: rather than clearing data, display some fancy
     // spinner thing and when done replace with ok mark, then clear.
-  },
-
-  getInitialState: function() {
-    return {
-      titleValue: "",
-      bodyValue: "",
-      submitState: "no"
-    };
-  },
-
-  componentDidMount: function() {
-    BlogiStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    BlogiStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
@@ -65,14 +62,14 @@ var PostPage = React.createClass({
     );
   },
 
-  _onChange: function() {
-    var newState = getAppState();
-    if(newState.submitState === "ok") {
-      this.setState({titleValue: "", bodyValue: ""});
-    }
-    console.log(newState);
-    this.setState(newState);
-  },
+  // _onChange: function() {
+  //   var newState = getAppState();
+  //   if(newState.submitState === "ok") {
+  //     this.setState({titleValue: "", bodyValue: ""});
+  //   }
+  //   console.log(newState);
+  //   this.setState(newState);
+  // },
 
   _titleChanged: function(e) {
     this.setState({titleValue: e.target.value});

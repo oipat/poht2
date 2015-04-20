@@ -15,25 +15,25 @@ var BlogiApi = {
       });
 
     //  for testing purposes
-    /*setTimeout(function() {
-      cb([
-        {
-          title: "BlogPostTitle1",
-          body: "BlogPostBody1",
-          author: "Author1"
-        },
-        {
-          title: "BlogPostTitle2",
-          author: "Author2",
-          body: "BlogPostBody2"
-        }, 
-        {
-          title: "BlogPostTitle3",
-          author: "Author1",
-          body: "BlogPostBody3"
-        }
-      ]);
-    }, 1000);*/
+    // setTimeout(function() {
+    //   cb([
+    //     {
+    //       title: "BlogPostTitle1",
+    //       body: "BlogPostBody1",
+    //       author: "Author1"
+    //     },
+    //     {
+    //       title: "BlogPostTitle2",
+    //       author: "Author2",
+    //       body: "BlogPostBody2"
+    //     }, 
+    //     {
+    //       title: "BlogPostTitle3",
+    //       author: "Author1",
+    //       body: "BlogPostBody3"
+    //     }
+    //   ]);
+    // }, 1000);
   },
 
   submitBlogPost: function(blogPost, cb) {
@@ -48,13 +48,14 @@ var BlogiApi = {
         try {
           cb(JSON.parse(res.getBody()));
         } catch(err) {
-          cb(JSON.parse(err.body));
+          //cb(JSON.parse(err.body));
+          console.log(err.body);
         }
       });
 
     // setTimeout(function() {
     //   cb(blogPost);
-    // }, 200);
+    // }, 600);
   }
 
 };

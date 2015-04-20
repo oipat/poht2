@@ -1,29 +1,48 @@
 var React = require('react');
-var ListenerMixin = require('alt/mixins/ListenerMixin')
+var ListenerMixin = require('alt/mixins/ListenerMixin');
 
-var blogiStore = require("../stores/BlogiStore");
-var blogiActions = require("../actions/BlogiActions");
+var BlogiStore = require("../stores/BlogiStore");
+var LocationStore = require("../stores/LocationStore");
+var BlogiActions = require("../actions/BlogiActions");
+var LocationActions = require("../actions/LocationActions");
 var BlogPostList = require('./BlogPostList');
 var Navigation = require('./Navigation');
 var HomePage = require('./HomePage');
+var PostPage = require('./PostPage');
+
 
 var BlogiApp = React.createClass({
   mixins: [ListenerMixin],
 
   getInitialState() {
-    return blogiStore.getState();
+    var state = LocationStore.getState();
+    state.location = location.hash.slice(1);
+    return state;
   },
 
   componentDidMount() {
-    this.listenTo(blogiStore, this.onChange);
-    blogiActions.loadPosts();
+    this.listenTo(LocationStore, this.onChange);
   },
 
-  onChange() {
-    this.setState(this.getInitialState())
+  onChange(newState) {
+    console.debug("BlogiApp.onChange");
+    console.debug(this.state);
+    this.setState(newState);
   },
 
   render() {
+    var currentView = <HomePage />;
+    switch(this.state.location) {
+      case 'home':
+        currentView = <HomePage />;
+        break;
+      case 'post':
+        currentView = <PostPage />;
+        break;
+      default:
+        currentView = <HomePage />;
+    }
+
     return (
       <div className="container-fluid">
         <header>
@@ -31,7 +50,7 @@ var BlogiApp = React.createClass({
         </header>
         <section id="content" className="row">
           <div className="col-xs-9">
-            <HomePage posts={this.state.posts} />
+            {currentView}
           </div>
           <div className="col-xs-3"></div>
         </section>

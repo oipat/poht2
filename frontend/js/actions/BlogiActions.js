@@ -6,7 +6,8 @@ var BlogiApi = require('../util/BlogiApi');
 class BlogiActions {
   constructor() {
     this.generateActions(
-      'loadPostsComplete'
+      'loadPostsComplete',
+      'submitBlogPostComplete'
     );
   }
 
@@ -23,6 +24,14 @@ class BlogiActions {
       (posts) => { this.actions.loadPostsComplete(posts) }
     );
   }
+
+  submitBlogPost(newBlogPost) {
+    this.dispatch({});
+    BlogiApi.submitBlogPost(newBlogPost,
+      (savedBlogPost) => { this.actions.submitBlogPostComplete(savedBlogPost) }
+    );
+  }
+
 
 }
 

@@ -12,6 +12,8 @@ var BlogPostList = React.createClass({
   },
 
   render: function() {
+    console.log("BlogPostList.render");
+    console.debug(this.props.blogPosts);
     return (
       <dl>
         {
