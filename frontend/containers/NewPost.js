@@ -8,13 +8,42 @@ import * as BlogiActions from '../actions'
 class NewPost extends Component {
   constructor(props, context) {
     super(props, context)
+    this.state = {
+      title: '',
+      body: '',
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.state)
+    BlogiActions.onSubmitPost({});
+  }
+
+  titleChanged (e) {
+    this.setState({title: e.target.value});
+  }
+
+  bodyChanged (e) {
+    this.setState({body: e.target.value});
   }
 
   render() {
-    console.log("NewPost.render")
+    console.log('NewPost.render')
+    console.log(this.state)
     const { posts, actions } = this.props
     return (
-      <section className="main">asd
+      <section className='main'>
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <label htmlFor='title'>Title:</label>
+          <input type='text' id='title' name='title'
+            onChange={this.titleChanged.bind(this)} value={this.state.title} />
+          <br />
+          <textarea name='body' onChange={this.bodyChanged.bind(this)}
+            value={this.state.body}></textarea>
+          <br />
+          <button name='submit'>submit</button>
+        </form>
       </section>
     )
   }
@@ -22,6 +51,7 @@ class NewPost extends Component {
 
 NewPost.propTypes = {
   posts: PropTypes.array,
+  actions: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {

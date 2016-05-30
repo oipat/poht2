@@ -1,4 +1,4 @@
-import { GET_POSTS, LOAD_POSTS } from '../constants/ActionTypes'
+import * as types from '../constants/ActionTypes'
 
 const initialState = [
   {
@@ -10,10 +10,14 @@ const initialState = [
 export default function posts(state = initialState, action) {
   console.log(action)
   switch (action.type) {
-    case GET_POSTS:
+    case types.GET_POSTS:
       return state
-    case LOAD_POSTS:
+    case types.LOAD_POSTS:
       return action.posts
+    case types.POST_SUBMITTED:
+      return state
+    case types.POST_SAVED:
+      return state
     default:
       return state
   }
