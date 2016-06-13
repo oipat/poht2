@@ -1,38 +1,36 @@
 import * as types from '../constants/ActionTypes'
 
-export function getPosts(numPosts, cb) {
-  setTimeout(function() {
-    cb([
-      {
-        id: 1,
-        title: 'BlogPostTitle1',
-        body: 'BlogPostBody1',
-        author: 'Author1'
-      },
-      {
-        id: 2,
-        title: 'BlogPostTitle2',
-        author: 'Author2',
-        body: 'BlogPostBody2'
-      },
-      {
-        id: 3,
-        title: 'BlogPostTitle3',
-        author: 'Author1',
-        body: 'BlogPostBody3'
-      }
-    ])
-}, 1200)
+export function getPosts() {
+  return function(dispatch) {
+    return fetchPosts().then(
+      response => response.json().then(
+        posts => dispatch(postsFetched(posts))
+      ),
+      error => dispatch(errorLoadingPosts(error))
+    )
+  }
+}
+
+function fetchPosts() {
+  return fetch('http://localhost:5000/blogi/posts')
+}
+
+function postsFetched(posts) {
+  return { type: types.POSTS_FETCHED, posts}
+}
+
+function errorLoadingPosts(error) {
+  return { type: types.POSTS_FETCH_ERROR, error}
 }
 
 export function onSubmitPost(post) {
-  setTimeout(function() {
-    postSaved()
-  }, 1100)
-  return { type: types.POST_SUBMITTED, post: post }
+  return function(dispatch) {
+    setTimeout(function() {
+      dispatch(postSaved(post));
+    }, 500);
+  }
 }
 
-function postSaved() {
-  console.log('postSaved')
-  return { type: types.POST_SAVED }
+function postSaved(post) {
+  return { type: types.POST_SAVED, post }
 }

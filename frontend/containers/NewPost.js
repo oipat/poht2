@@ -17,7 +17,8 @@ class NewPost extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state)
-    BlogiActions.onSubmitPost({});
+    // BlogiActions.onSubmitPost({});
+    this.props.actions.onSubmitPost({title: this.state.title, body: this.state.body})
   }
 
   titleChanged (e) {

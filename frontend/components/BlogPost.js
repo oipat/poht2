@@ -11,14 +11,15 @@ class BlogPost extends Component {
 
     return (
       <li>
-      {post.id}, {post.title}
+      {post.title}
       </li>
     )
   }
 }
 
 BlogPost.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 }
 
 export default BlogPost

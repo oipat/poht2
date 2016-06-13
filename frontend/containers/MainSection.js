@@ -17,7 +17,7 @@ class MainSection extends Component {
       <section className="main">
         <ul>
           {posts.map(post =>
-            <BlogPost key={post.id} post={post} {...actions} />
+            <BlogPost key={post.id} post={post} actions={actions} />
           )}
         </ul>
       </section>
@@ -27,6 +27,7 @@ class MainSection extends Component {
 
 MainSection.propTypes = {
   posts: PropTypes.array,
+  actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {

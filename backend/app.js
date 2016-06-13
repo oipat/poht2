@@ -44,12 +44,12 @@ app.listen(app.get('port'), function() {
 // Testdata
 db.blogPosts.insert([
   {
-    title: "BlogPostTitle1",
+    title: "BlogPostTitle11",
     body: "BlogPostBody1",
     author: "Author1"
   },
   {
-    title: "BlogPostTitle2",
+    title: "BlogPostTitle12",
     body: "BlogPostBody2",
     author: "Author2"
   }], function(err, newDoc) {

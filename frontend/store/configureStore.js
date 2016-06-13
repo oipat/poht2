@@ -1,15 +1,13 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import { getPosts } from '../actions'
 import rootReducer from '../reducers'
 import * as types from '../constants/ActionTypes'
 
 export default function configureStore(preloadedState) {
-  const store = createStore(rootReducer, preloadedState)
+  const store = createStore(rootReducer, preloadedState, applyMiddleware(thunk))
 
-  store.dispatch({type: types.GET_POSTS})
-  getPosts(5, function(posts) {
-    store.dispatch({type: types.LOAD_POSTS, posts})
-  });
+  store.dispatch(getPosts())
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
