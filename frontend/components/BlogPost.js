@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
+import { Link } from 'react-router'
 
 class BlogPost extends Component {
   constructor(props, context) {
@@ -10,9 +10,14 @@ class BlogPost extends Component {
   const { post, actions } = this.props
 
     return (
-      <li>
-      {post.title}
-      </li>
+      <div>
+        <h1>
+          {post.title}
+        </h1>
+        <p>
+          {post.body}
+        </p>
+      </div>
     )
   }
 }

@@ -1,6 +1,5 @@
-export const GET_POSTS = 'GET_POSTS'
+export const POSTS_FETCHING = 'POSTS_FETCHING'
 export const POSTS_FETCHED = 'POSTS_FETCHED'
 export const POSTS_FETCH_ERROR = 'POSTS_FETCHED'
-export const LOAD_POSTS = 'LOAD_POSTS'
 export const POST_SUBMITTED = 'POST_SUBMITTED'
 export const POST_SAVED = 'POST_SAVED'
