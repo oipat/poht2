@@ -1,0 +1,115 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  background-color: grey;
+}
+ul {
+  padding: 0;
+}
+h1 {
+  padding: 0;
+  margin: 0;
+}
+h1.title {
+  float: left;
+}
+div.header {
+  width: 100%;
+  background-color: white;
+  float: left;
+}
+div.hamburger {
+  float: right;
+  height: 2em;
+}
+div.hamburger:hover {
+  cursor: pointer;
+}
+div.footer {
+  width: 100%;
+  background-color: blue;
+  height: 4em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+div.wrapper {
+  min-height: 100%;
+  position: relative;
+  background-color: lightblue;
+}
+section.container {
+  width: 100%;
+  margin: 0 auto;
+  float: left;
+}
+div.content {
+  background-color: red;
+  float: left;
+  margin-bottom: 4em;
+}
+article {
+  background-color: grey;
+  padding-left: 2%;
+  padding-right: 1%;
+  width: 97%;
+  float: left;
+  font-face: arial;
+  font-size: 1.5em;
+}
+nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 60%;
+  display: none;
+  background-color: green;
+  z-index: 2;
+  animation-name: hamburger;
+  animation-duration: 0.6s;
+  font-size: 3em;
+  padding-left: 2%;
+}
+nav li {
+  list-style-type: none;
+}
+@media screen and (min-width: 50em) {
+  nav {
+    display: block !important; // overwrite the embedded style in element
+    z-index: 0;
+    position: relative;
+    background-color: pink;
+    float: left;
+    width: 20%;
+    min-height: 12em;
+    animation-name: none;
+    font-size: 1.4em;
+  }
+  div.container {
+    width: 77%;
+    margin-left: 17%;
+    float: left;
+  }
+  div.content {
+    width: 88%;
+  }
+  article {
+    background-color: grey;
+    padding-left: 2%;
+    padding-right: 1%;
+    width: 75%;
+    float: left;
+  }
+  div.hamburger {
+    display: none;
+  }
+}
+@keyframes hamburger {
+  from {
+    left: -40em;
+  }
+  to {
+    left: 0;
+  }
+}

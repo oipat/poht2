@@ -41,7 +41,7 @@ export function onSubmitPost(post) {
     })
     fetch(request).then(
       response => response.json().then(
-        post = dispatch(postSaved(post))
+        post => dispatch(postSaved(post))
       )
     )
   }

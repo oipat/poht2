@@ -9,6 +9,7 @@ import NewPost from './containers/NewPost'
 import Nav from './components/Nav'
 import configureStore from './store/configureStore'
 import App from './containers/App'
+import './style.css'
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)

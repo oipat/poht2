@@ -11,7 +11,8 @@ class App extends Component {
   render() {
     const { actions } = this.props
     return (
-      <div>
+      <div className="wrapper">
+        <h1 className="title">Tittel</h1>
         <Nav />
         {this.props.children}
       </div>
