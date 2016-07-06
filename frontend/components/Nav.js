@@ -8,8 +8,10 @@ class Nav extends Component {
   render() {
     return (
       <nav>
-        <Link to="/">Front page</Link>
-        <Link to="/newpost">New Post</Link>
+        <ul>
+          <li><Link to="/">Front page</Link></li>
+          <li><Link to="/newpost">New Post</Link></li>
+        </ul>
       </nav>
     )
   }

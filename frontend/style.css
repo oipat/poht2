@@ -33,12 +33,12 @@ div.footer {
   bottom: 0;
   left: 0;
 }
-div.wrapper {
+div.root {
   min-height: 100%;
   position: relative;
   background-color: lightblue;
 }
-section.container {
+div.container {
   width: 100%;
   margin: 0 auto;
   float: left;
@@ -47,15 +47,16 @@ div.content {
   background-color: red;
   float: left;
   margin-bottom: 4em;
+  width: 100%;
 }
-article {
-  background-color: grey;
+section.main {
+  background-color: yellow;
   padding-left: 2%;
   padding-right: 1%;
-  width: 97%;
   float: left;
   font-face: arial;
   font-size: 1.5em;
+  width: 97%;
 }
 nav {
   position: absolute;
@@ -94,8 +95,7 @@ nav li {
   div.content {
     width: 88%;
   }
-  article {
-    background-color: grey;
+  section.main {
     padding-left: 2%;
     padding-right: 1%;
     width: 75%;

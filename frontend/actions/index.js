@@ -3,7 +3,7 @@ import * as types from '../constants/ActionTypes'
 export function getPosts() {
   return function(dispatch) {
     dispatch({ type: types.POSTS_FETCHING })
-    return fetchPosts().then(
+    return fetch('http://localhost:5000/blogi/posts').then(
       response => response.json().then(
         posts =>
         {
@@ -15,10 +15,6 @@ export function getPosts() {
       error => dispatch(errorLoadingPosts(error))
     )
   }
-}
-
-function fetchPosts() {
-  return fetch('http://localhost:5000/blogi/posts')
 }
 
 function postsFetched(posts) {
@@ -40,9 +36,12 @@ export function onSubmitPost(post) {
     	})
     })
     fetch(request).then(
-      response => response.json().then(
-        post => dispatch(postSaved(post))
-      )
+      response =>
+        response.status === 200 ?
+          response.json().then(
+            post => dispatch(postSaved(post))
+          ) :
+          dispatch({ type: types.POST_SAVE_ERROR, response })
     )
   }
 }

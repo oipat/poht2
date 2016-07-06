@@ -19,6 +19,8 @@ export default function posts(state = initialState, action) {
           body: action.post.body
         }
       ]
+    case types.POST_SAVE_ERROR:
+      return state
     case types.POSTS_FETCHED:
       return action.posts.map(
         post => { return { id: post._id, title: post.title, body: post.body} }
