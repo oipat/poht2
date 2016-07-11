@@ -4,10 +4,7 @@ import classnames from 'classnames'
 
 class HamburgerMenu extends Component {
 
-
   handleClick(e) {
-    console.log(this.state)
-    //function not implemented yet
     this.props.actions.onHamburgerMenuClick()
   }
 
@@ -18,6 +15,10 @@ class HamburgerMenu extends Component {
       </div>
     )
   }
+}
+
+HamburgerMenu.propTypes = {
+  actions: PropTypes.object.isRequired,
 }
 
 export default HamburgerMenu

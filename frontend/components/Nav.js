@@ -7,7 +7,7 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav>
+      <nav style={{display: this.props.displayMode}}>
         <ul>
           <li><Link to="/">Front page</Link></li>
           <li><Link to="/newpost">New Post</Link></li>
@@ -15,6 +15,10 @@ class Nav extends Component {
       </nav>
     )
   }
+}
+
+Nav.propTypes = {
+  displayMode: PropTypes.string.isRequired,
 }
 
 export default Nav

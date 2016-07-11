@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import BlogPost from '../components/BlogPost'
 import BlogPostList from '../components/BlogPostList'
+import ErrorNotification from '../components/ErrorNotification'
 import * as BlogiActions from '../actions'
 
 
@@ -22,7 +23,11 @@ class MainSection extends Component {
       var requestedPost = posts.find(
         post => post.id == this.props.routeParams.id
       )
-      mainComponent = <BlogPost post={requestedPost} actions={actions} />
+      if(requestedPost === undefined) {
+        mainComponent = <ErrorNotification message="Post not found" />
+      } else {
+        mainComponent = <BlogPost post={requestedPost} actions={actions} />
+      }
     }
     else {
       mainComponent = <BlogPostList posts={posts} actions={actions} />
@@ -44,7 +49,6 @@ MainSection.propTypes = {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     posts: state.posts,
     general: state.general,

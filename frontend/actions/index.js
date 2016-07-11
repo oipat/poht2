@@ -49,3 +49,11 @@ export function onSubmitPost(post) {
 function postSaved(post) {
   return { type: types.POST_SAVED, post }
 }
+
+export function onHamburgerMenuClick() {
+  return { type: types.HAMBURGER_MENU_CLICKED }
+}
+
+export function onBodyClick() {
+  return { type: types.BODY_CLICKED }
+}

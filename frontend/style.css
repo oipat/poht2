@@ -6,6 +6,9 @@ body, html {
 ul {
   padding: 0;
 }
+li {
+  list-style-position: inside;
+}
 h1 {
   padding: 0;
   margin: 0;
@@ -33,7 +36,7 @@ div.footer {
   bottom: 0;
   left: 0;
 }
-div.root {
+div.wrapper {
   min-height: 100%;
   position: relative;
   background-color: lightblue;

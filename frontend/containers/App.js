@@ -9,17 +9,26 @@ import * as BlogiActions from '../actions'
 
 
 class App extends Component {
+
+  handleBodyClick(e) {
+    if(e.target.className !== 'hamburger' &&
+        e.target.tagName.toLowerCase() !== 'nav') {
+      this.props.actions.onBodyClick()
+    }
+  }
+
   render() {
     const { actions } = this.props
+    const { general } = this.props
     return (
-      <div className="wrapper">
+      <div className="wrapper" onClick={this.handleBodyClick.bind(this)}>
         <div className="header">
           <h1 className="title">Tittel</h1>
-          <HamburgerMenu />
+          <HamburgerMenu actions={actions} />
         </div>
         <div className="container">
           <div className="content">
-            <Nav />
+            <Nav displayMode={general.displayHamburgerMenu} />
             {this.props.children}
           </div>
         </div>
@@ -33,6 +42,13 @@ class App extends Component {
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
+  general: PropTypes.object.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    general: state.general,
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -41,4 +57,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default App
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
