@@ -19,16 +19,19 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: [ 'babel' ],
         exclude: /node_modules/,
         include: __dirname
       },
       {
         test: /\.css?$/,
-        loaders: [ 'style', 'raw' ],
+        loaders: ['style', 'raw'],
         include: __dirname
       }
-    ]
-  }
-}
+    ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
+};
