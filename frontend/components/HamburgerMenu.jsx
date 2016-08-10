@@ -1,24 +1,28 @@
-import React, { PropTypes, Component } from 'react'
-import classnames from 'classnames'
+import React, { PropTypes, Component } from 'react';
 
 
 class HamburgerMenu extends Component {
 
-  handleClick(e) {
-    this.props.actions.onHamburgerMenuClick()
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.actions.onHamburgerMenuClick();
   }
 
   render() {
     return (
-      <div className="hamburger" onClick={this.handleClick.bind(this)}>
+      <div className="hamburger" onClick={this.handleClick}>
         menu
       </div>
-    )
+    );
   }
 }
 
 HamburgerMenu.propTypes = {
   actions: PropTypes.object.isRequired,
-}
+};
 
-export default HamburgerMenu
+export default HamburgerMenu;
