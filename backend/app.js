@@ -1,27 +1,25 @@
-(function() {
 'use strict';
 
-var express = require('express'),
+const express = require('express'),
   bodyParser = require('body-parser'),
   expressValidator = require('express-validator'),
   cors = require('cors');
-var Datastore = require('nedb');
-var db = {};
-db.blogPosts = new Datastore();
+const Datastore = require('nedb');
+const db = new Datastore();
 
-var app = express();
+const app = express();
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cors());
 
 app.set('port', (process.env.PORT || 5000));
-app.get('/blogi/posts', function(req, res) {
-  db.blogPosts.find({}, function(err, docs) {
+app.get('/blogi/posts', (req, res) => {
+  db.find({}, (err, docs) => {
     res.send(docs);
   });
 });
 
-app.post('/blogi/posts', function(req, res) {
+app.post('/blogi/posts', (req, res) => {
   req.checkBody('title').notEmpty().isLength(3, 50);
   req.checkBody('body').notEmpty();
 
@@ -31,18 +29,18 @@ app.post('/blogi/posts', function(req, res) {
     res.send({errors: "123"});
   }
   else {
-    db.blogPosts.insert(req.body, function(err, newDoc) {
+    db.insert(req.body, (err, newDoc) => {
       res.send(newDoc);
     });
   }
 });
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Node app is running at localhost:' + app.get('port'));
 });
 
 // Testdata
-db.blogPosts.insert([
+db.insert([
   {
     title: "BlogPostTitle11",
     body: "BlogPostBody1",
@@ -52,12 +50,11 @@ db.blogPosts.insert([
     title: "BlogPostTitle12",
     body: "BlogPostBody2",
     author: "Author2"
-  }], function(err, newDoc) {
+  }], (err, newDoc) => {
     if(!err) {
       console.log(newDoc);
     } else {
       console.log("error inserting: " + err);
     }
-  });
-
-})();
+  }
+);

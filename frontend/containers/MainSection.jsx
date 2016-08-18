@@ -22,7 +22,7 @@ class MainSection extends Component {
     const { posts, general, actions } = this.props;
     let mainComponent;
     if (this.props.routeParams.id) {
-      let requestedPost = posts.find(
+      const requestedPost = posts.find(
         post => post.id === this.props.routeParams.id
       );
       if (requestedPost === undefined) {

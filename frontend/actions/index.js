@@ -5,10 +5,6 @@ function postsFetched(posts) {
   return { type: types.POSTS_FETCHED, posts };
 }
 
-function errorLoadingPosts(error) {
-  return { type: types.POSTS_FETCH_ERROR, error };
-}
-
 function postSaved(post) {
   return { type: types.POST_SAVED, post };
 }
@@ -21,10 +17,10 @@ export function getPosts() {
         (posts) => {
           setTimeout(() => {
             dispatch(postsFetched(posts));
-          }, 800);
+          }, 400);
         }
       ),
-      (error) => dispatch(errorLoadingPosts(error))
+      (error) => dispatch({ type: types.POSTS_FETCH_ERROR, error })
     );
   };
 }
@@ -40,13 +36,19 @@ export function onSubmitPost(post) {
       }),
     });
     fetch(request).then(
-      (response) => (
-        response.status === 200 ?
+      (response) => {
+        if (response.status === 200) {
           response.json().then(
             responsePost => dispatch(postSaved(responsePost))
-          ) :
-          dispatch({ type: types.POST_SAVE_ERROR, response })
-      )
+          );
+        } else {
+          dispatch({ type: types.POST_SAVE_ERROR, response });
+        }
+      }
+    ).catch(
+      (error) => {
+        dispatch({ type: types.POST_SAVE_ERROR, error });
+      }
     );
   };
 }

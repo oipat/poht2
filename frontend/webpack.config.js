@@ -1,8 +1,13 @@
+/* eslint import/no-extraneous-dependencies: off */
 const path = require('path');
 const webpack = require('webpack');
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
+
+const isProd = (process.env.NODE_ENV === 'production');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: isProd ? 'cheap-module-eval-source-map' : 'source-map',
   entry: [
     'webpack-hot-middleware/client',
     './index',
@@ -15,6 +20,13 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    // enables optimizations by minifiers
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: isProd ? JSON.stringify('production') :
+          JSON.stringify('development'),
+      },
+    }),
   ],
   module: {
     loaders: [
@@ -26,8 +38,13 @@ module.exports = {
       },
       {
         test: /\.css?$/,
-        loaders: ['style', 'raw'],
+        loaders: ['style-loader', 'css-loader', 'postcss-loader'],
+        exclude: /node_modules/,
         include: __dirname,
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
       },
     ],
   },
@@ -36,5 +53,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+  },
+  postcss: function postcss() {
+    return [precss, autoprefixer];
   },
 };

@@ -1,4 +1,7 @@
 import React, { PropTypes } from 'react';
+import MarkdownIt from 'markdown-it';
+
+const md = new MarkdownIt();
 
 function BlogPost({ post }) {
   return (
@@ -6,9 +9,7 @@ function BlogPost({ post }) {
       <h1>
         {post.title}
       </h1>
-      <p>
-        {post.body}
-      </p>
+      <p dangerouslySetInnerHTML={{ __html: md.render(post.body) }} />
     </div>
   );
 }
