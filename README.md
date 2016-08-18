@@ -1,1 +1,1 @@
-Simple React/Flux implementation of a simple blog.
+Simple React/Redux implementation of a simple blog.
