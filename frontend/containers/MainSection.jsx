@@ -31,7 +31,7 @@ class MainSection extends Component {
         mainComponent = <BlogPost post={requestedPost} actions={actions} />;
       }
     } else {
-      mainComponent = <BlogPostList posts={posts} actions={actions} />;
+      mainComponent = <BlogPostList posts={posts} userRole="admin" />;
     }
     return (
       <section className="main">
