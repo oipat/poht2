@@ -12,11 +12,7 @@ export default function posts(state = initialState, action) {
       return state;
     case types.POST_SAVED:
       return [
-        {
-          id: action.post._id,
-          title: action.post.title,
-          body: action.post.body,
-        },
+        Object.assign({ id: post._id }, action.post),
         ...state,
       ];
     case types.POST_UPDATED:
@@ -35,7 +31,7 @@ export default function posts(state = initialState, action) {
       return [];
     case types.POSTS_FETCHED:
       return action.posts.map(
-        post => ({ id: post._id, title: post.title, body: post.body })
+        post => Object.assign({ id: post._id }, post)
       );
     default:
       return state;

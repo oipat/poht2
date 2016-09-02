@@ -43,7 +43,7 @@ app.delete('/blogi/posts/:id', (req, res) => {
 });
 
 app.put('/blogi/posts/:id', (req, res) => {
-  db.update({ _id: req.params.id }, req.body,
+  db.update({ _id: req.params.id }, { $set: req.body },
       { upsert: true }, (err, numUpdated) => {
     res.status(err || numUpdated !== 1 ? 500 : 200);
     res.send();
