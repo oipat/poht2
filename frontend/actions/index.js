@@ -9,7 +9,8 @@ function generateBaseRequest(path, config) {
 export function getPosts() {
   return (dispatch) => {
     dispatch({ type: types.POSTS_FETCHING });
-    return fetch('http://localhost:5000/blogi/posts').then(
+    const request = generateBaseRequest('', {});
+    return fetch(request).then(
       response => response.json().then(
         (posts) => {
           // artificial lag
