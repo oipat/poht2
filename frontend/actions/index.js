@@ -1,6 +1,11 @@
 import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
+function generateBaseRequest(path, config) {
+  return new Request(`http://localhost:5000/blogi/posts/${path}`,
+    Object.assign({ mode: 'cors' }, config));
+}
+
 export function getPosts() {
   return (dispatch) => {
     dispatch({ type: types.POSTS_FETCHING });
@@ -18,36 +23,36 @@ export function getPosts() {
   };
 }
 
-export function onSubmitPost(post) {
-  if (post.id) {
-    return (dispatch) => {
-      const request = new Request(`http://localhost:5000/blogi/posts/${post.id}`, {
-        method: 'PUT',
-        mode: 'cors',
-        body: JSON.stringify(post),
-        headers: new Headers({
-          'Content-Type': 'application/json',
-        }),
-      });
-      fetch(request).then(
-        (response) => {
-          if (response.status === 200) {
-            dispatch({ type: types.POST_UPDATED, post });
-          } else {
-            dispatch({ type: types.POST_SAVE_ERROR, response });
-          }
-        }
-      ).catch(
-        (error) => {
-          dispatch({ type: types.POST_SAVE_ERROR, error });
-        }
-      );
-    };
-  }
+export function onUpdatePost(post) {
   return (dispatch) => {
-    const request = new Request('http://localhost:5000/blogi/posts', {
+    const request = generateBaseRequest(`${post.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(post),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+    });
+
+    fetch(request).then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch({ type: types.POST_UPDATED, post });
+        } else {
+          dispatch({ type: types.POST_SAVE_ERROR, response });
+        }
+      }
+    ).catch(
+      (error) => {
+        dispatch({ type: types.POST_SAVE_ERROR, error });
+      }
+    );
+  };
+}
+
+export function onSubmitPost(post) {
+  return (dispatch) => {
+    const request = generateBaseRequest('', {
       method: 'POST',
-      mode: 'cors',
       body: JSON.stringify(post),
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -57,7 +62,8 @@ export function onSubmitPost(post) {
       (response) => {
         if (response.status === 200) {
           response.json().then(
-            responsePost => dispatch({ type: types.POST_SAVED, post: responsePost })
+            responsePost =>
+              dispatch({ type: types.POST_SAVED, post: responsePost })
           );
         } else {
           dispatch({ type: types.POST_SAVE_ERROR, response });
@@ -82,9 +88,8 @@ export function onBodyClick() {
 export function deleteClicked(postId) {
   return (dispatch) => {
     dispatch({ type: types.POST_DELETING });
-    const request = new Request(`http://localhost:5000/blogi/posts/${postId}`, {
+    const request = generateBaseRequest(`${postId}`, {
       method: 'DELETE',
-      mode: 'cors',
     });
     fetch(request).then(
       (response) => {

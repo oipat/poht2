@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import MainSection from './containers/MainSection';
-import NewPost from './containers/NewPost';
+import PostForm from './containers/PostForm';
 import configureStore from './store/configureStore';
 import App from './containers/App';
 import './style.css';
@@ -17,9 +17,9 @@ render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={MainSection} />
-        <Route path="/newpost" component={NewPost} />
+        <Route path="/newpost" component={PostForm} />
         <Route path="/viewpost/:id" component={MainSection} />
-        <Route path="/editpost/:id" component={NewPost} />
+        <Route path="/editpost/:id" component={PostForm} />
       </Route>
     </Router>
   </Provider>,

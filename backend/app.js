@@ -14,7 +14,7 @@ app.use(cors());
 
 app.set('port', (process.env.PORT || 5000));
 app.get('/blogi/posts', (req, res) => {
-  db.find({}, (err, docs) => {
+  db.find({}).sort({ created: -1 }).exec((err, docs) => {
     res.send(docs);
   });
 });
@@ -29,7 +29,7 @@ app.post('/blogi/posts', (req, res) => {
     res.send({errors: "123"});
   }
   else {
-    db.insert(req.body, (err, newDoc) => {
+    db.insert(Object.assign({ created: new Date() }, req.body), (err, newDoc) => {
       res.send(newDoc);
     });
   }
@@ -58,23 +58,27 @@ app.listen(app.get('port'), () => {
 db.insert([
   {
     title: "BlogPostTitle11",
-    body: "BlogPostBody1",
-    author: "Author1"
+    body: "BlogPostBody1\n\npara\n# Head1\n## Head2\n```\ncode\n```",
+    author: "Author1",
+    created: new Date('2016-09-01'),
   },
   {
     title: "BlogPostTitle12",
     body: "BlogPostBody2",
-    author: "Author2"
+    author: "Author2",
+    created: new Date('2016-08-30'),
   },
   {
     title: "BlogPostTitle13",
     body: "BlogPostBody3",
-    author: "Author3"
+    author: "Author3",
+    created: new Date('2016-07-01'),
   },
   {
     title: "BlogPostTitle14",
-    body: "BlogPostBody4",
-    author: "Author4"
+    body: "BlogPostBody4\n\npara\n# Head1\n## Head2\n```\ncode\n```",
+    author: "Author4",
+    created: new Date('2016-06-22'),
   }], (err, newDoc) => {
     if(!err) {
       console.log(newDoc);

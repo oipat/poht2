@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as BlogiActions from '../actions';
 
 
-class NewPost extends Component {
+class PostForm extends Component {
   constructor(props, context) {
     super(props, context);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,9 +31,15 @@ class NewPost extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.onSubmitPost(
-      { id: this.state.id || null, title: this.state.title, body: this.state.body }
-    );
+    if (this.state.id) {
+      this.props.actions.onUpdatePost(
+        { id: this.state.id, title: this.state.title, body: this.state.body }
+      );
+    } else {
+      this.props.actions.onSubmitPost(
+        { title: this.state.title, body: this.state.body }
+      );
+    }
   }
 
   titleChanged(e) {
@@ -67,7 +73,7 @@ class NewPost extends Component {
   }
 }
 
-NewPost.propTypes = {
+PostForm.propTypes = {
   posts: PropTypes.array,
   actions: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
@@ -88,4 +94,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewPost);
+)(PostForm);

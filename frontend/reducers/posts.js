@@ -11,18 +11,22 @@ export default function posts(state = initialState, action) {
     case types.POST_SUBMITTED:
       return state;
     case types.POST_SAVED:
-      console.log(action)
       return [
-        ...state,
         {
           id: action.post._id,
           title: action.post.title,
           body: action.post.body,
         },
+        ...state,
       ];
     case types.POST_UPDATED:
-      return state.filter(post =>
-         post.id !== action.post.id).concat(action.post);
+      // Sometimes I wonder whether being all nice
+      // and functional is worth it...
+      return state.slice(0, state.findIndex(post =>
+          post.id === action.post.id))
+        .concat(action.post)
+        .concat(state.slice(state.findIndex(post =>
+          post.id === action.post.id) + 1));
     case types.POST_SAVE_ERROR:
       return state;
     case types.POST_DELETED:
@@ -31,7 +35,7 @@ export default function posts(state = initialState, action) {
       return [];
     case types.POSTS_FETCHED:
       return action.posts.map(
-        post => ({ id: post._id, title: post.title, body: post.body})
+        post => ({ id: post._id, title: post.title, body: post.body })
       );
     default:
       return state;

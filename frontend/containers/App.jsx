@@ -16,7 +16,8 @@ class App extends Component {
   }
 
   handleBodyClick(e) {
-    if (e.target.className !== 'hamburger' &&
+    if (this.props.general.displayHamburgerMenu !== 'none' &&
+        e.target.className !== 'hamburger' &&
         e.target.tagName.toLowerCase() !== 'nav') {
       this.props.actions.onBodyClick();
     }

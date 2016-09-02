@@ -9,17 +9,8 @@ import * as BlogiActions from '../actions';
 
 class MainSection extends Component {
 
-  constructor() {
-    super();
-    this.load = this.load.bind(this);
-  }
-
-  load() {
-    this.props.actions.getPosts();
-  }
-
   render() {
-    const { posts, general, actions } = this.props;
+    const { posts, actions } = this.props;
     let mainComponent;
     if (this.props.routeParams.id) {
       const requestedPost = posts.find(
@@ -34,8 +25,6 @@ class MainSection extends Component {
     return (
       <section className="main">
         {mainComponent}
-        {general.fetching ? 'asd' : 'zxc'}
-        <button onClick={this.load}>Load Posts</button>
       </section>
     );
   }
