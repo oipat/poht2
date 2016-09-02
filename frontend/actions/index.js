@@ -1,22 +1,15 @@
 import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 
-function postsFetched(posts) {
-  return { type: types.POSTS_FETCHED, posts };
-}
-
-function postSaved(post) {
-  return { type: types.POST_SAVED, post };
-}
-
 export function getPosts() {
   return (dispatch) => {
     dispatch({ type: types.POSTS_FETCHING });
     return fetch('http://localhost:5000/blogi/posts').then(
       response => response.json().then(
         (posts) => {
+          // artificial lag
           setTimeout(() => {
-            dispatch(postsFetched(posts));
+            dispatch({ type: types.POSTS_FETCHED, posts });
           }, 400);
         }
       ),
@@ -26,6 +19,31 @@ export function getPosts() {
 }
 
 export function onSubmitPost(post) {
+  if (post.id) {
+    return (dispatch) => {
+      const request = new Request(`http://localhost:5000/blogi/posts/${post.id}`, {
+        method: 'PUT',
+        mode: 'cors',
+        body: JSON.stringify(post),
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+      });
+      fetch(request).then(
+        (response) => {
+          if (response.status === 200) {
+            dispatch({ type: types.POST_UPDATED, post });
+          } else {
+            dispatch({ type: types.POST_SAVE_ERROR, response });
+          }
+        }
+      ).catch(
+        (error) => {
+          dispatch({ type: types.POST_SAVE_ERROR, error });
+        }
+      );
+    };
+  }
   return (dispatch) => {
     const request = new Request('http://localhost:5000/blogi/posts', {
       method: 'POST',
@@ -39,7 +57,7 @@ export function onSubmitPost(post) {
       (response) => {
         if (response.status === 200) {
           response.json().then(
-            responsePost => dispatch(postSaved(responsePost))
+            responsePost => dispatch({ type: types.POST_SAVED, post: responsePost })
           );
         } else {
           dispatch({ type: types.POST_SAVE_ERROR, response });
@@ -59,4 +77,27 @@ export function onHamburgerMenuClick() {
 
 export function onBodyClick() {
   return { type: types.BODY_CLICKED };
+}
+
+export function deleteClicked(postId) {
+  return (dispatch) => {
+    dispatch({ type: types.POST_DELETING });
+    const request = new Request(`http://localhost:5000/blogi/posts/${postId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+    });
+    fetch(request).then(
+      (response) => {
+        if (response.status === 200) {
+          dispatch({ type: types.POST_DELETED, postId });
+        } else {
+          dispatch({ type: types.POST_DELETE_ERROR, response });
+        }
+      }
+    ).catch(
+      (error) => {
+        dispatch({ type: types.POST_DELETE_ERROR, error });
+      }
+    );
+  };
 }

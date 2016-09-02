@@ -14,11 +14,26 @@ class NewPost extends Component {
       title: '',
       body: '',
     };
+    this.componentWillReceiveProps(props);
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.routeParams.id) {
+      const thePost = props.posts.find(post => post.id === props.routeParams.id);
+      this.state = thePost || this.state;
+    } else {
+      this.state = {
+        title: '',
+        body: '',
+      };
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.actions.onSubmitPost({ title: this.state.title, body: this.state.body });
+    this.props.actions.onSubmitPost(
+      { id: this.state.id || null, title: this.state.title, body: this.state.body }
+    );
   }
 
   titleChanged(e) {
@@ -32,6 +47,7 @@ class NewPost extends Component {
   render() {
     return (
       <section className="main">
+        <h1>{this.props.routeParams.id ? 'Edit Blog Post' : 'Post New Blog Post'}</h1>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="title">Title:</label>
           <input
@@ -39,6 +55,7 @@ class NewPost extends Component {
             onChange={this.titleChanged} value={this.state.title}
           />
           <br />
+          <label htmlFor="body">Content:</label>
           <textarea
             name="body" onChange={this.bodyChanged} value={this.state.body}
           />
@@ -53,6 +70,7 @@ class NewPost extends Component {
 NewPost.propTypes = {
   posts: PropTypes.array,
   actions: PropTypes.object.isRequired,
+  routeParams: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {

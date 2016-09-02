@@ -5,8 +5,8 @@ function Nav({ displayMode }) {
   return (
     <nav style={{ display: displayMode }}>
       <ul>
-        <li><Link to="/">Front page</Link></li>
-        <li><Link to="/newpost">New Post</Link></li>
+        <Link to="/"><li>Front page</li></Link>
+        <Link to="/newpost"><li>New Post</li></Link>
       </ul>
     </nav>
   );

@@ -25,13 +25,11 @@ class MainSection extends Component {
       const requestedPost = posts.find(
         post => post.id === this.props.routeParams.id
       );
-      if (requestedPost === undefined) {
-        mainComponent = <ErrorNotification message="Post not found" />;
-      } else {
-        mainComponent = <BlogPost post={requestedPost} actions={actions} />;
-      }
+      mainComponent = requestedPost === undefined ?
+        <ErrorNotification message="Post not found" /> :
+        <BlogPost post={requestedPost} actions={actions} userRole="asd" />;
     } else {
-      mainComponent = <BlogPostList posts={posts} userRole="admin" />;
+      mainComponent = <BlogPostList posts={posts} userRole="admin" actions={actions} />;
     }
     return (
       <section className="main">

@@ -19,6 +19,7 @@ render(
         <IndexRoute component={MainSection} />
         <Route path="/newpost" component={NewPost} />
         <Route path="/viewpost/:id" component={MainSection} />
+        <Route path="/editpost/:id" component={NewPost} />
       </Route>
     </Router>
   </Provider>,

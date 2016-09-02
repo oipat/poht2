@@ -11,6 +11,7 @@ export default function posts(state = initialState, action) {
     case types.POST_SUBMITTED:
       return state;
     case types.POST_SAVED:
+      console.log(action)
       return [
         ...state,
         {
@@ -19,8 +20,15 @@ export default function posts(state = initialState, action) {
           body: action.post.body,
         },
       ];
+    case types.POST_UPDATED:
+      return state.filter(post =>
+         post.id !== action.post.id).concat(action.post);
     case types.POST_SAVE_ERROR:
       return state;
+    case types.POST_DELETED:
+      return state.filter((post) => post.id !== action.postId);
+    case types.POSTS_FETCHING:
+      return [];
     case types.POSTS_FETCHED:
       return action.posts.map(
         post => ({ id: post._id, title: post.title, body: post.body})

@@ -35,6 +35,21 @@ app.post('/blogi/posts', (req, res) => {
   }
 });
 
+app.delete('/blogi/posts/:id', (req, res) => {
+  db.remove({ _id: req.params.id }, {}, (err, numRemoved) => {
+    res.status(err || numRemoved !== 1 ? 500 : 200);
+    res.send();
+  });
+});
+
+app.put('/blogi/posts/:id', (req, res) => {
+  db.update({ _id: req.params.id }, req.body,
+      { upsert: true }, (err, numUpdated) => {
+    res.status(err || numUpdated !== 1 ? 500 : 200);
+    res.send();
+  });
+});
+
 app.listen(app.get('port'), () => {
   console.log('Node app is running at localhost:' + app.get('port'));
 });
@@ -50,6 +65,16 @@ db.insert([
     title: "BlogPostTitle12",
     body: "BlogPostBody2",
     author: "Author2"
+  },
+  {
+    title: "BlogPostTitle13",
+    body: "BlogPostBody3",
+    author: "Author3"
+  },
+  {
+    title: "BlogPostTitle14",
+    body: "BlogPostBody4",
+    author: "Author4"
   }], (err, newDoc) => {
     if(!err) {
       console.log(newDoc);
