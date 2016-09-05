@@ -9,12 +9,17 @@ const initialState = {
 
 export default function general(state = initialState, action) {
   let displayHamburgerMenu;
-  console.debug(action);
   switch (action.type) {
     case types.POSTS_FETCHING:
       return Object.assign({}, state, { fetching: true });
     case types.POSTS_FETCHED:
       return Object.assign({}, state, { fetching: false });
+    case types.POSTS_FETCH_ERROR:
+      return Object.assign({}, state,
+        { notifications: [...state.notifications, 'Error fetching posts.'] });
+    case types.POSTS_SAVE_ERROR:
+      return Object.assign({}, state,
+        { notifications: [...state.notifications, 'Error saving post.'] });
     case types.POST_DELETED:
       return Object.assign({}, state,
         { notifications: [...state.notifications, 'Post Deleted!'] });

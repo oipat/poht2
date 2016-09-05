@@ -20,9 +20,7 @@ app.get('/blogi/posts', (req, res) => {
 });
 
 app.post('/blogi/posts', (req, res) => {
-  req.checkBody('title').notEmpty().isLength(3, 50);
-  req.checkBody('body').notEmpty();
-
+  validatePost(req);
   var errors = req.validationErrors();
   if(errors) {
     res.status(422);
@@ -30,6 +28,7 @@ app.post('/blogi/posts', (req, res) => {
   }
   else {
     db.insert(Object.assign({ created: new Date() }, req.body), (err, newDoc) => {
+      res.status(201);
       res.send(newDoc);
     });
   }
@@ -43,6 +42,12 @@ app.delete('/blogi/posts/:id', (req, res) => {
 });
 
 app.put('/blogi/posts/:id', (req, res) => {
+  validatePost(req);
+  var errors = req.validationErrors();
+  if(errors) {
+    res.status(422);
+    res.send({errors: "123"});
+  }
   db.update({ _id: req.params.id }, { $set: req.body },
       { upsert: true }, (err, numUpdated) => {
     res.status(err || numUpdated !== 1 ? 500 : 200);
@@ -87,3 +92,8 @@ db.insert([
     }
   }
 );
+
+function validatePost(req) {
+  req.checkBody('title').notEmpty().isLength(3, 50);
+  req.checkBody('body').notEmpty();
+}

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import fp from 'lodash/fp';
 import BlogPost from '../components/BlogPost';
 import BlogPostList from '../components/BlogPostList';
 import ErrorNotification from '../components/ErrorNotification';
@@ -10,17 +11,21 @@ import * as BlogiActions from '../actions';
 class MainSection extends Component {
 
   render() {
-    const { posts, actions } = this.props;
+    const { actions, posts } = this.props;
+    console.log(posts);
+    const postsArr = fp.flow(
+      fp.sortBy('created'),
+      fp.reverse,
+    )(posts);
+    // const postsArr = _chain(posts).sortBy('created').reverse().value();
     let mainComponent;
     if (this.props.routeParams.id) {
-      const requestedPost = posts.find(
-        post => post.id === this.props.routeParams.id
-      );
+      const requestedPost = posts[this.props.routeParams.id];
       mainComponent = requestedPost === undefined ?
         <ErrorNotification message="Post not found" /> :
         <BlogPost post={requestedPost} actions={actions} userRole="asd" />;
     } else {
-      mainComponent = <BlogPostList posts={posts} userRole="admin" actions={actions} />;
+      mainComponent = <BlogPostList posts={postsArr} userRole="admin" actions={actions} />;
     }
     return (
       <section className="main">
@@ -31,7 +36,7 @@ class MainSection extends Component {
 }
 
 MainSection.propTypes = {
-  posts: PropTypes.array,
+  posts: PropTypes.object,
   general: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,

@@ -19,7 +19,7 @@ class PostForm extends Component {
 
   componentWillReceiveProps(props) {
     if (props.routeParams.id) {
-      const thePost = props.posts.find(post => post.id === props.routeParams.id);
+      const thePost = props.posts[props.routeParams.id];
       this.state = thePost || this.state;
     } else {
       this.state = {
@@ -31,14 +31,11 @@ class PostForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.state);
     if (this.state.id) {
-      this.props.actions.onUpdatePost(
-        { id: this.state.id, title: this.state.title, body: this.state.body }
-      );
+      this.props.actions.onUpdatePost(this.state);
     } else {
-      this.props.actions.onSubmitPost(
-        { title: this.state.title, body: this.state.body }
-      );
+      this.props.actions.onSubmitPost(this.state);
     }
   }
 
@@ -74,7 +71,7 @@ class PostForm extends Component {
 }
 
 PostForm.propTypes = {
-  posts: PropTypes.array,
+  posts: PropTypes.object,
   actions: PropTypes.object.isRequired,
   routeParams: PropTypes.object.isRequired,
 };

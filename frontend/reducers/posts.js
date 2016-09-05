@@ -1,8 +1,12 @@
+import omit from 'lodash/fp/omit';
 import * as types from '../constants/ActionTypes';
 
-const initialState = [
+const initialState = {
+};
 
-];
+function fixIdKey(post) {
+  return Object.assign({ id: post._id }, post);
+}
 
 export default function posts(state = initialState, action) {
   switch (action.type) {
@@ -11,28 +15,22 @@ export default function posts(state = initialState, action) {
     case types.POST_SUBMITTED:
       return state;
     case types.POST_SAVED:
-      return [
-        Object.assign({ id: post._id }, action.post),
-        ...state,
-      ];
+      return Object.assign({}, state, { [action.post._id]: fixIdKey(action.post) });
     case types.POST_UPDATED:
-      // Sometimes I wonder whether being all nice
-      // and functional is worth it...
-      return state.slice(0, state.findIndex(post =>
-          post.id === action.post.id))
-        .concat(action.post)
-        .concat(state.slice(state.findIndex(post =>
-          post.id === action.post.id) + 1));
+      return Object.assign({ [action.updatedPost.id]: action.updatedPost },
+         omit(`${action.updatedPost.id}`)(state));
     case types.POST_SAVE_ERROR:
       return state;
     case types.POST_DELETED:
-      return state.filter((post) => post.id !== action.postId);
+      return omit(`${action.postId}`)(state);
     case types.POSTS_FETCHING:
-      return [];
+      return {};
     case types.POSTS_FETCHED:
-      return action.posts.map(
-        post => Object.assign({ id: post._id }, post)
-      );
+      const ret = {};
+      Object.keys(action.posts).forEach(key => {
+        ret[key] = Object.assign({}, action.posts[key], { id: action.posts[key]._id })
+      });
+      return ret;
     default:
       return state;
   }
