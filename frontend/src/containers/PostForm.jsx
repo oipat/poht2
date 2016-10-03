@@ -31,7 +31,6 @@ class PostForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
     if (this.state.id) {
       this.props.actions.onUpdatePost(this.state);
     } else {
@@ -59,9 +58,7 @@ class PostForm extends Component {
           />
           <br />
           <label htmlFor="body">Content:</label>
-          <textarea
-            name="body" onChange={this.bodyChanged} value={this.state.body}
-          />
+          <textarea name="body" onChange={this.bodyChanged} value={this.state.body} />
           <br />
           <button name="submit">submit</button>
         </form>

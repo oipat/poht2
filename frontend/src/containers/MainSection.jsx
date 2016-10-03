@@ -12,7 +12,6 @@ class MainSection extends Component {
 
   render() {
     const { actions, posts } = this.props;
-    console.log(posts);
     const postsArr = fp.flow(
       fp.sortBy('created'),
       fp.reverse,

@@ -10,7 +10,7 @@ module.exports = {
   devtool: isProd ? 'cheap-module-eval-source-map' : 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './index',
+    './src/index',
   ],
   output: {
     path: path.join(__dirname, 'dist'),

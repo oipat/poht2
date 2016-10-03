@@ -1,4 +1,3 @@
-import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
 import makeBlogiApi from '../util/BlogiApi';
 
