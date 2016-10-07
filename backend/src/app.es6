@@ -1,18 +1,29 @@
 'use strict';
 
-const express = require('express'),
-  bodyParser = require('body-parser'),
-  expressValidator = require('express-validator'),
-  cors = require('cors');
-const Datastore = require('nedb');
-const db = new Datastore();
+import express from 'express';
+import bodyParser from 'body-parser';
+import expressValidator from 'express-validator';
+import cors from 'cors';
+import Datastore from 'nedb';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import Component from './Component'
 
+
+const db = new Datastore();
 const app = express();
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cors());
 
 app.set('port', (process.env.PORT || 5000));
+
+app.get('/ssr', (req, res) => {
+  res.send(
+    ReactDOMServer.renderToString(Component())
+  );
+});
+
 app.get('/blogi/posts', (req, res) => {
   db.find({}).sort({ created: -1 }).exec((err, docs) => {
     res.send(docs);
